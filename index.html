@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sai Bhaskar | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --card: #151515;
+      --text: #ffffff;
+      --muted: #d7d7d7;
+      --accent: #e74c3c; /* coral red */
+      --border: rgba(231, 76, 60, 0.35);
+    }
+    body.light {
+      --bg: #f5f6fa;
+      --card: #ffffff;
+      --text: #222;
+      --muted: #555;
+      --accent: #e74c3c;
+      --border: rgba(231, 76, 60, 0.45);
+      color-scheme: light;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: "Poppins", sans-serif; }
+    a { color: inherit; text-decoration: none; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* Header */
+    header { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .navwrap { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+    .brand { font-weight: 700; font-size: 1.7rem; color: var(--accent); }
+    nav { display: flex; gap: 28px; align-items: center; }
+    nav a { opacity: 0.95; }
+    nav a:hover { color: var(--accent); }
+    .theme-toggle { border: 1px solid var(--border); background: transparent; color: var(--text); width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; }
+
+    /* Mobile menu */
+    .hamburger { display: none; border: 1px solid var(--border); background: transparent; color: var(--text); width: 40px; height: 40px; border-radius: 10px; }
+    @media (max-width: 900px) {
+      nav { display: none; position: absolute; top: 66px; right: 24px; background: var(--card); padding: 14px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); flex-direction: column; min-width: 220px; }
+      nav.show { display: flex; }
+      .hamburger { display: inline-grid; place-items: center; }
+    }
+
+    /* Hero */
+    section { scroll-margin-top: 90px; }
+    .hero { padding: clamp(40px, 7vw, 100px) 0; }
+    .hero-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: clamp(24px, 5vw, 60px); align-items: center; }
+    @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; text-align: center; } }
+
+    .photo { position: relative; width: clamp(260px, 35vw, 380px); aspect-ratio: 1/1; margin: 0 auto; }
+    .photo::before { content: ""; position: absolute; inset: -16px; border-radius: 50%; background: radial-gradient(circle at 40% 50%, rgba(231,76,60,0.95), rgba(231,76,60,0.55) 55%, rgba(231,76,60,0.15) 70%, transparent 71%); filter: blur(1px); z-index: 0; }
+    .photo img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; border: 6px solid var(--accent); box-shadow: 0 20px 50px rgba(231,76,60,0.25); }
+
+    .hero h1 { font-weight: 800; letter-spacing: 0.4px; font-size: clamp(40px, 6vw, 72px); line-height: 1.12; text-align: center; margin-bottom: 22px; color: var(--accent); }
+    @media (min-width: 901px) { .hero h1 { text-align: left; } }
+
+    .headline { font-size: clamp(22px, 3vw, 34px); font-weight: 700; margin-bottom: 10px; }
+    .headline span.role { color: var(--accent); font-weight: 800; }
+
+    .summary { color: var(--muted); max-width: 620px; line-height: 1.8; margin: 12px 0 24px; }
+
+    .social { display: flex; gap: 16px; margin: 20px 0 26px; }
+    .social a { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--border); }
+    .social a:hover { background: var(--accent); color: #fff; border-color: transparent; transform: translateY(-2px); transition: 0.25s; }
+    @media (max-width: 900px) { .social { justify-content: center; } }
+
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border: 2px solid var(--accent); border-radius: 28px; color: var(--accent); font-weight: 700; }
+    .btn:hover { background: var(--accent); color: #fff; }
+
+    /* Sections */
+    .section-title { text-align: center; font-size: clamp(26px, 3.2vw, 36px); color: var(--accent); margin: 70px 0 28px; font-weight: 800; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .card { background: var(--card); border: 1px solid rgba(255,255,255,0.06); padding: 22px; border-radius: 14px; transition: transform .25s ease, box-shadow .25s ease; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+
+    /* Contact */
+    #contact .links { display: grid; gap: 14px; max-width: 700px; margin: 0 auto; }
+    #contact a { color: var(--text); opacity: 0.95; }
+    #contact a:hover { color: var(--accent); }
+
+    footer { padding: 34px 0 44px; color: #aaa; background: var(--card); margin-top: 64px; text-align: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container navwrap">
+      <div class="brand">My Digital Portfolio</div>
+      <button class="hamburger" aria-label="Toggle Menu"><i class="fa-solid fa-bars"></i></button>
+      <nav id="mainnav" aria-label="Primary">
+        <a href="#home">Home</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="theme-toggle" id="themeBtn" aria-label="Toggle theme"><i class="fa-regular fa-moon"></i></button>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="container">
+        <h1>Hi, It's Sai Bhaskar</h1>
+        <div class="hero-grid">
+          <div class="photo">
+            <img src="SNY0735777.jpg" alt="Sai Bhaskar profile photo" />
+          </div>
+          <div class="copy">
+            <div class="headline">I'm an <span class="role">AI & ML student</span></div>
+            <p class="summary">I am pursuing a Master's in Computer Applications specializing in Artificial Intelligence & Machine Learning at Lovely Professional University. Passionate about Data Science, AI, and Software Development.</p>
+            <div class="social">
+              <a href="https://www.linkedin.com/in/saibhaskar2002/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+              <a href="https://github.com/bhxskxr" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+              <a href="https://x.com/bhxskxr" target="_blank" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+              <a href="https://www.instagram.com/bhxskxr/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+              <a href="mailto:botchasaibhaskar@gmail.com" aria-label="Email"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+            <a class="btn" href="12400987_Sai Bhaskar_UpdatedCV.pdf" download>
+              <i class="fa-regular fa-circle-down"></i> Download CV
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="container">
+      <h2 class="section-title">Skills</h2>
+      <div class="cards">
+        <div class="card">C</div>
+        <div class="card">C++</div>
+        <div class="card">DBMS</div>
+        <div class="card">OOP Concepts</div>
+        <div class="card">SQL</div>
+        <div class="card">Python</div>
+        <div class="card">Data Science</div>
+        <div class="card">Machine Learning</div>
+        <div class="card">HTML & CSS</div>
+        <div class="card">JavaScript</div>
+      </div>
+    </section>
+
+    <section id="education" class="container">
+      <h2 class="section-title">Education</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>MCA (AI & ML)</h3>
+          <p>Lovely Professional University</p>
+        </div>
+        <div class="card">
+          <h3>B.Com (Hons.)</h3>
+          <p>Andhra University</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="container">
+      <h2 class="section-title">Projects</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>Hospital Patient Management System</h3>
+          <p>
+            <a href="https://github.com/bhxskxr/Hospital-Patient-Management-System" target="_blank">
+              SQL-based database system for efficient hospital operations.
+            </a>
+          </p>
+        </div>
+        <div class="card">
+          <h3>Autism Project</h3>
+          <p>
+            <a href="https://github.com/bhxskxr/Autism-Prediction-ML-Project" target="_blank">
+              AI/ML project supporting autism-related analysis using classification models.
+            </a>
+          </p>
+        </div>
+        <div class="card">
+          <h3>Inventory Management System</h3>
+          <p>
+            <a href="https://github.com/bhxskxr/Inventory-Management-System" target="_blank">
+              Designed and implemented a dynamic inventory management system using C++ and singly linked list.
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="container">
+      <h2 class="section-title">Contact</h2>
+      <div class="links">
+        <p><i class="fa-regular fa-envelope"></i> &nbsp; <a href="mailto:botchasaibhaskar@gmail.com">botchasaibhaskar@gmail.com</a></p>
+        <p><i class="fa-brands fa-linkedin-in"></i> &nbsp; <a target="_blank" href="https://www.linkedin.com/in/saibhaskar2002/">linkedin.com/in/saibhaskar2002</a></p>
+        <p><i class="fa-brands fa-github"></i> &nbsp; <a target="_blank" href="https://github.com/bhxskxr">github.com/bhxskxr</a></p>
+        <p><i class="fa-brands fa-x-twitter"></i> &nbsp; <a target="_blank" href="https://x.com/bhxskxr">x.com/bhxskxr</a></p>
+        <p><i class="fa-brands fa-instagram"></i> &nbsp; <a target="_blank" href="https://www.instagram.com/bhxskxr/">instagram.com/bhxskxr</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2025 Sai Bhaskar • All Rights Reserved</div>
+  </footer>
+
+  <script>
+    // Theme toggle with persistence
+    const themeBtn = document.getElementById('themeBtn');
+    const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+    const savedTheme = localStorage.getItem('theme');
+    if ((savedTheme === 'light') || (!savedTheme && prefersLight)) document.body.classList.add('light');
+    function updateIcon(){
+      const i = themeBtn.querySelector('i');
+      if (document.body.classList.contains('light')) { i.className = 'fa-regular fa-moon'; }
+      else { i.className = 'fa-regular fa-sun'; }
+    }
+    updateIcon();
+    themeBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+      updateIcon();
+    });
+
+    // Mobile nav
+    const burger = document.querySelector('.hamburger');
+    const nav = document.getElementById('mainnav');
+    burger.addEventListener('click', () => nav.classList.toggle('show'));
+  </script>
+</body>
+</html>
